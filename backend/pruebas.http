@@ -1,0 +1,322 @@
+GET http://localhost:3000/alumnos
+
+###
+GET http://localhost:3000/alumnos/1002
+
+###
+POST http://localhost:3000/alumnos
+Content-Type: application/json
+
+{
+    "legajo": 1023,
+    "nombre": "Ramón",
+    "carrera": "Sistemas",
+    "correo": "ramon@mail.com"
+}
+###
+PUT http://localhost:3000/alumnos/1002
+Content-Type: application/json
+
+{
+    "nombre": "Juan Carlos",
+    "carrera": "Programación",
+    "correo": "juan@mail.com"
+}
+
+###
+DELETE http://localhost:3000/alumnos/1021
+
+###
+POST http://localhost:3000/alumnos
+Content-Type: application/json
+
+{
+    "id": 5,
+    "nombre": "Rocío",
+    "carrera": "Programación"
+}
+
+###
+GET http://localhost:3000/docentes
+
+###
+POST http://localhost:3000/docentes
+Content-Type: application/json
+
+{
+    "dni": 5222311,
+    "nombre": "Rocío",
+    "especialidad": "Programación",
+    "correo": "rocio@mail.com"
+}
+
+###
+# @name login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "{{adminEmail}}",
+    "password":"{{adminPassword}}"
+}
+
+### Cursos: crear (primero ejecutá la petición login y después esta)
+POST http://localhost:3000/cursos
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+{
+  "codigo": "CUR-PRUEBA-01",
+  "nombre": "Curso de prueba",
+  "descripcion": "Prueba del CRUD de cursos",
+  "duracion": 64
+}
+
+### Cursos: listar
+GET http://localhost:3000/cursos
+Authorization: Bearer {{login.response.body.token}}
+
+### Cursos: consultar por código
+GET http://localhost:3000/cursos/CUR-PRUEBA-01
+Authorization: Bearer {{login.response.body.token}}
+
+### Cursos: modificar
+PUT http://localhost:3000/cursos/CUR-PRUEBA-01
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+{
+  "codigo": "CUR-PRUEBA-01",
+  "nombre": "Curso de prueba editado",
+  "descripcion": "Datos modificados",
+  "duracion": 80
+}
+
+### Cursos: eliminar
+DELETE http://localhost:3000/cursos/CUR-PRUEBA-01
+Authorization: Bearer {{login.response.body.token}}
+
+### nuevas para el TP
+GET http://localhost:3000/materias
+
+###
+GET http://localhost:3000/materias/PRG4
+
+###
+GET http://localhost:3000/materias/NO-EXISTE
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "TEST-MAT-01",
+  "nombre": "Materia de prueba",
+  "descripcion": "Registro para probar el CRUD",
+  "cargaHoraria": 64,
+  "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "TEST-MAT-01",
+  "nombre": "Otro nombre",
+  "descripcion": "",
+  "cargaHoraria": 32,
+  "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "nombre": "Sin código",
+  "descripcion": "",
+  "cargaHoraria": 32,
+  "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "TEST-SIN-NOMBRE",
+  "descripcion": "",
+  "cargaHoraria": 32,
+  "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "TEST-HORAS-0",
+  "nombre": "Carga cero",
+  "descripcion": "",
+  "cargaHoraria": 0,
+  "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "TEST-HORAS-NEG",
+  "nombre": "Carga negativa",
+  "descripcion": "",
+  "cargaHoraria": -4,
+  "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "TEST-HORAS-DEC",
+  "nombre": "Carga decimal",
+  "descripcion": "",
+  "cargaHoraria": 2.5,
+  "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "TEST-ESTADO-INVALIDO",
+  "nombre": "Estado inválido",
+  "descripcion": "",
+  "cargaHoraria": 32,
+  "estado": "pendiente"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "TEST-SIN-CARGA",
+  "nombre": "Sin carga horaria",
+  "descripcion": "",
+  "estado": "activa"
+}
+
+###
+PUT http://localhost:3000/materias/TEST-MAT-01
+Content-Type: application/json
+
+{
+  "nombre": "Materia de prueba modificada",
+  "descripcion": "Nombre y descripción actualizados",
+  "cargaHoraria": 64,
+  "estado": "activa"
+}
+
+###
+PUT http://localhost:3000/materias/TEST-MAT-01
+Content-Type: application/json
+
+{
+  "nombre": "Materia de prueba modificada",
+  "descripcion": "Nombre y descripción actualizados",
+  "cargaHoraria": 80,
+  "estado": "inactiva"
+}
+
+###
+PUT http://localhost:3000/materias/NO-EXISTE
+Content-Type: application/json
+
+{
+  "nombre": "No existe",
+  "descripcion": "",
+  "cargaHoraria": 32,
+  "estado": "activa"
+}
+
+###
+PUT http://localhost:3000/materias/TEST-MAT-01
+Content-Type: application/json
+
+{
+  "codigo": "PRG4",
+  "nombre": "Materia duplicada",
+  "descripcion": "",
+  "cargaHoraria": 32,
+  "estado": "activa"
+}
+
+###
+GET http://localhost:3000/materias/TEST-MAT-01
+
+###
+DELETE http://localhost:3000/materias/TEST-MAT-01
+
+###
+GET http://localhost:3000/materias/TEST-MAT-01
+
+###
+DELETE http://localhost:3000/materias/NO-EXISTE
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "API-ESPACIOS-NOMBRE",
+  "nombre": "   ",
+  "descripcion": "",
+  "cargaHoraria": 32,
+  "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "   ",
+  "nombre": "Código con espacios",
+  "descripcion": "",
+  "cargaHoraria": 32,
+  "estado": "activa"
+}
+
+###
+POST http://localhost:3000/materias
+Content-Type: application/json
+
+{
+  "codigo": "API-ESPACIOS-DESC",
+  "nombre": "Descripción con espacios",
+  "descripcion": "   ",
+  "cargaHoraria": 32,
+  "estado": "activa"
+}
+
+### Cambiar el código de PRG4 por uno nuevo
+PUT http://localhost:3000/materias/PRG4
+Content-Type: application/json
+
+{
+  "codigo": "PRG4-TEST",
+  "nombre": "Programación IV",
+  "descripcion": "",
+  "cargaHoraria": 64,
+  "estado": "activa"
+}
+
+### Comprobar que el código nuevo existe
+GET http://localhost:3000/materias/PRG4-TEST
+
+### Comprobar que el código anterior ya no existe
+GET http://localhost:3000/materias/PRG4

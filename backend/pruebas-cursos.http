@@ -1,0 +1,53 @@
+### Paso 0: obtener el token (ejecutar primero)
+# @name login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "{{adminEmail}}",
+    "password": "{{adminPassword}}"
+}
+
+### Prueba 1: registrar un curso (POST)
+POST http://localhost:3000/cursos
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+{
+    "codigo": "CUR001",
+    "nombre": "Programación Web",
+    "descripcion": "Desarrollo de aplicaciones web",
+    "duracion": 64
+}
+
+### Listado de cursos (GET)
+GET http://localhost:3000/cursos
+Authorization: Bearer {{login.response.body.token}}
+
+### Prueba 2a: consultar un curso por código (GET)
+GET http://localhost:3000/cursos/CUR001
+Authorization: Bearer {{login.response.body.token}}
+
+### Prueba 2b: modificar el curso (PUT)
+PUT http://localhost:3000/cursos/CUR001
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+{
+    "codigo": "CUR001",
+    "nombre": "Programación Web II",
+    "descripcion": "Desarrollo de aplicaciones web",
+    "duracion": 80
+}
+
+### Prueba 3a: eliminar el curso (DELETE)
+DELETE http://localhost:3000/cursos/CUR001
+Authorization: Bearer {{login.response.body.token}}
+
+### Prueba 3b: verificar que ya no aparece en el listado (GET)
+GET http://localhost:3000/cursos
+Authorization: Bearer {{login.response.body.token}}
+
+### Extra: consultar el curso eliminado (debe dar 404)
+GET http://localhost:3000/cursos/CUR001
+Authorization: Bearer {{login.response.body.token}}
